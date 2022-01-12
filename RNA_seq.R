@@ -181,14 +181,19 @@ Idents(sample) = rts$Pred_Type
 #Plot for assigned identity of each cluster 
 DimPlot(sample, reduction = "umap", split.by = 'seurat_clusters')
 
-##Another cell identity annotation 
+#Another cell identity annotation
+## Automatic annotation 
+# -------------SingleR--------------------------
 library(celldex) #reference 
 library(SingleR) #automatic annotation 
+library(SingleCellExperiment)
+library(scuttle)
+library(ggplot2) 
+library(scater) #for plotting heatmap 
 
-# -------------SingleR--------------------------
 
 # import reference and prepare sample
-ref <- MouseRNAseqData() #summarised experiment object 
+ref <- HumanPrimaryCellAtlasData() #summarised experiment object 
 ref
 test <- as.SingleCellExperiment(sample)
 test
@@ -200,7 +205,7 @@ predictions_sg <- SingleR(test = test, ref = ref, labels = ref$label.main, de.me
 # Summarizing the distribution:
 table(predictions$pruned.labels)
 
-## add to ypur seuart obj metadata, just need pruned labels 
+## add to your seuart obj metadata, just need pruned labels 
 sample <- AddMetaData(object = sample, metadata = predictions@listData$pruned.labels, col.name = 'cell_type')
 Idents(sample) = predictions@listData$pruned.labels
 DimPlot(sample, reduction = "umap")
@@ -211,15 +216,11 @@ plotScoreHeatmap(predictions)
 plotDeltaDistribution(predictions)
 summary(is.na(predictions$pruned.labels))
 
-library(SingleCellExperiment)
-library(scuttle)
-library(ggplot2)
-library(scater)
-
 all.markers <- metadata(predictions)$de.genes
 test$labels <- predictions$labels
 
-#T cell related markers 
-# seurat object dun work, SingleCellExperiment works
+#Hepatocytes related markers 
+# seurat object doesn't work, SingleCellExperiment works
 plotHeatmap(test, order_columns_by = "labels", 
-            features = unique(unlist(all.markers$Hepatocytes)))
+            features = unique(unlist(all.markers$Hepatocytes))) 
+
