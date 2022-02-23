@@ -1,0 +1,16 @@
+1. Create repository on github 
+
+2. Clone the respository from github to local 
+  https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
+  *need personal token 
+  
+  git clone (your repository in html) 
+  
+  
+3. move the file to the local repository 
+
+4. cd (the local repository) 
+
+5. git add .
+6. git commit -m "Add existing file"
+7. git pull origin 
