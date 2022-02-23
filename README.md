@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-A repository for RNA seq analysis 
+ 
 <!--
 **angiepoon/angiepoon** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
